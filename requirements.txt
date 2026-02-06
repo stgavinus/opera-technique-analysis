@@ -1,0 +1,7 @@
+librosa
+scipy
+praat-parselmouth
+numpy
+matplotlib
+sounddevice
+soundfile
