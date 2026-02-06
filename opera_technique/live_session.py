@@ -58,8 +58,7 @@ def live_session():
                         process_buffer(buffer)
                         buffer = [] # Reset
                         silence_start = None
-                        print("
-Listening...")
+                        print("\nListening...")
                 else:
                     silence_start = None # Reset silence timer if sound returns
                 
@@ -69,14 +68,12 @@ Listening...")
                     process_buffer(buffer)
                     buffer = []
                     silence_start = None
-                    print("
-Listening...")
+                    print("\nListening...")
 
             else:
                 # Trigger recording start
                 if amplitude > SILENCE_THRESHOLD:
-                    print("
-[Recording...]")
+                    print("\n[Recording...]")
                     is_recording = True
                     buffer.append(indata.copy())
                     silence_start = None
@@ -102,11 +99,9 @@ Listening...")
                 sd.sleep(100)
 
     except KeyboardInterrupt:
-        print("
-Session ended.")
+        print("\nSession ended.")
     except Exception as e:
-        print(f"
-Error: {e}")
+        print(f"\nError: {e}")
         print("Tip: Ensure you have a working microphone and 'sounddevice' installed.")
 
 if __name__ == "__main__":
