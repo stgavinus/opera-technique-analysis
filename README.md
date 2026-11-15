@@ -16,10 +16,32 @@ A Python-based vocal analysis tool for measuring operatic technique, designed fo
    ./run.sh
    ```
 
+To analyze a recording instead of live input:
+
+```bash
+./venv/bin/python opera_technique/main.py path/to/recording.wav
+```
+
+## Testing
+
+```bash
+./venv/bin/pip install pytest
+./venv/bin/python -m pytest tests
+```
+
+The suite checks each measurement against signals whose true values are known. `tests/synth.py` generates a harmonic tone with a sinusoidal vibrato of a chosen rate and extent, an optional formant boost near 3 kHz, and optional breath noise. The tests confirm that:
+
+- steady pitches from G3 to E5 are detected within 1%,
+- vibrato rates of 5 to 6.5 Hz are measured within 0.3 Hz, and extent within 20%,
+- a 3 kHz formant boost is located within 150 Hz and raises the ring and spectral-balance scores,
+- HNR is above 20 dB for a clean tone and falls steadily as noise is added.
+
+`tests/test_recordings.py` also runs every clip in `tests/recordings/` against the ranges reported for trained operatic voices (see that folder's README).
+
 ## Structure
-- `opera_technique/analysis/`: Core DSP logic (Pitch, Resonance, Quality).
-- `opera_technique/utils/`: Audio preprocessing and helper functions.
+- `opera_technique/analysis/`: Core DSP logic (pitch, resonance, quality).
+- `opera_technique/utils/`: Audio loading and preprocessing.
+- `opera_technique/main.py`: Analyze an audio file and print a report.
 - `opera_technique/live_session.py`: CLI-based live phrase monitor.
 - `opera_technique/visual_session.py`: Real-time spectrum visualization.
-- `tests/`: Unit tests (to be implemented).
-- `data/`: Sample audio files.
+- `tests/`: Unit tests on synthetic signals, plus optional checks on real recordings.
